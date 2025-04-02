@@ -1,0 +1,13 @@
+- name: Copiar configuración a través de TFTP
+  hosts: aruba_switches
+  gather_facts: no
+  tasks:
+    - name: Ejecutar comando de copia de configuración usando TFTP
+      arubanetworks.aos_switch.arubaoss_command:
+        commands:
+          - "copy running-config tftp://TFTP_IP/{{ inventory_hostname }}_bck cli"
+      register: copy_output
+
+    - name: Mostrar salida de la copia
+      debug:
+        var: copy_output
